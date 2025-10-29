@@ -4,7 +4,7 @@ import MealCard from './MealCard';
 // NOTE: Ensure 'bootstrap/dist/css/bootstrap.min.css' and './glass.css' 
 // are imported in your project's main file (e.g., App.js/index.js).
 
-const API_URL = 'http://localhost:3001/api/generate-plan';
+const API_URL = 'https://diet-planner-stkt.onrender.com/api/generate-plan';
 
 const DietPlanner = () => {
     // 1. State for User Inputs

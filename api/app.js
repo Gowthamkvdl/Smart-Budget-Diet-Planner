@@ -1,6 +1,6 @@
 // app.js (Using ES Module syntax)
 
-// 1. Setup Environment and Dependencies
+// Setup Environment and Dependencies
 import 'dotenv/config'; 
 import express from 'express';
 import cors from 'cors';
@@ -20,13 +20,10 @@ if (!apiKey) {
 }
 
 
-// Initialize the Gemini client - THIS IS NOW YOUR MAIN AI OBJECT
 const ai = new GoogleGenAI({ apiKey }); 
 
 
-// --- JSON SCHEMA DEFINITION --- (No change needed here)
 const mealPlanSchema = {
-    // ... (Your schema definition using Type.*)
     type: Type.ARRAY,
     description: "A 7-day meal plan, with daily budget and calorie estimates.",
     items: {
@@ -84,7 +81,6 @@ app.post('/api/generate-plan', async (req, res) => {
         
         console.log(`Generating plan for: ${constraints.cuisinePreference} at ${constraints.dailyBudget} INR/day...`);
 
-        // 🛑 CORRECTION 2: Call generateContent directly on the 'ai' client object
         const result = await ai.models.generateContent({
             model: "gemini-2.5-flash", // Specify the model here instead of in initialization
             contents: prompt,
