@@ -59,7 +59,7 @@ const MealCard = ({ mealPlan, constraints }) => {
           );
 
           return (
-            <div key={dayPlan.day} className="col-lg-6">
+            <div key={dayPlan.day} className="col-lg-6 px-3">
               <article className="plan-card glass-card h-100 rounded-5">
                 {/* Header */}
                 <header className="plan-header rounded-top-5">
