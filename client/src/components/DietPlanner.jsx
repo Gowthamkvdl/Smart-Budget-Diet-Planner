@@ -50,6 +50,11 @@ const DietPlanner = () => {
         setMealPlan(null);
         setProgress(0);
 
+        // 👇 Fix mobile disappearing hover / focus glitch
+        if (document.activeElement && typeof document.activeElement.blur === "function") {
+            document.activeElement.blur();
+        }
+
         if (constraints.calorieTarget <= 0 || constraints.dailyBudget <= 0) {
             setError("Please enter valid positive numbers for Calories and Budget.");
             setIsLoading(false);
@@ -104,12 +109,12 @@ const DietPlanner = () => {
 
             {/* Input Form Card - Uses custom glass-card style */}
             <div className="p-3 p-md-5 mx-3 pt-4 glass-card mb-5 m-0">
-                <div className="card-body p-0"> 
+                <div className="card-body p-0">
                     <form onSubmit={handleSubmit}>
                         <div className="row g-4">
                             {/* Diet Type */}
                             <div className="col-md-6">
-                                    <i className="bi bi-egg-fried field-icon me-1" />
+                                <i className="bi bi-egg-fried field-icon me-1" />
                                 <label className="form-label">Diet Type</label>
                                 <div className="form-field">
                                     <select
@@ -128,7 +133,7 @@ const DietPlanner = () => {
 
                             {/* Cuisine Preference */}
                             <div className="col-md-6">
-                                    <i className="bi bi-geo-alt field-icon me-1" />
+                                <i className="bi bi-geo-alt field-icon me-1" />
                                 <label className="form-label">Cuisine Preference</label>
                                 <div className="form-field">
                                     <input
@@ -145,7 +150,7 @@ const DietPlanner = () => {
 
                             {/* Daily Calorie Goal */}
                             <div className="col-md-6">
-                                    <i className="bi bi-fire field-icon me-1" />
+                                <i className="bi bi-fire field-icon me-1" />
                                 <label className="form-label">Daily Calorie Goal</label>
                                 <div className="form-field">
                                     <input
@@ -162,7 +167,7 @@ const DietPlanner = () => {
 
                             {/* Max Daily Budget (INR) */}
                             <div className="col-md-6">
-                                    <i className="bi bi-currency-rupee field-icon me-1" />
+                                <i className="bi bi-currency-rupee field-icon me-1" />
                                 <label className="form-label">Max Daily Budget (INR)</label>
                                 <div className="form-field">
                                     <input
@@ -179,7 +184,7 @@ const DietPlanner = () => {
 
                             {/* Allergies/Avoidances */}
                             <div className="col-12">
-                                    <i className="bi bi-exclamation-triangle field-icon me-1" />
+                                <i className="bi bi-exclamation-triangle field-icon me-1" />
                                 <label className="form-label">Allergies/Avoidances (Comma Separated)</label>
                                 <div className="form-field">
                                     <input
