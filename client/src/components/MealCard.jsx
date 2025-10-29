@@ -37,7 +37,7 @@ const MealCard = ({ mealPlan, constraints }) => {
         cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     }
-  }, [mealPlan]); // <-- trigger when mealPlan updates
+  }, [mealPlan]); // <-- trigger when mealPlan update
 
   return (
     <section ref={cardRef} className="mt-5 mb-5">
