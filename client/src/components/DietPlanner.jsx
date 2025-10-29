@@ -1,4 +1,6 @@
+// src/DietPlanner.jsx
 import React, { useEffect, useState } from 'react';
+import { flushSync } from 'react-dom';
 import axios from 'axios';
 import MealCard from './MealCard';
 
@@ -15,61 +17,63 @@ const DietPlanner = () => {
   });
 
   // 2) Output & UI State
-  const [mealPlan, setMealPlan] = useState(null);
+  const [mealPlan, setMealPlan]   = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [error, setError] = useState(null);
+  const [progress, setProgress]   = useState(0);
+  const [error, setError]         = useState(null);
 
-  // 3) Detect touch device to switch button variant (mobile vs desktop)
+  // 3) Detect touch device (mobile) to avoid disabled attribute
   const [isTouch, setIsTouch] = useState(false);
   useEffect(() => {
     const touch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     setIsTouch(touch);
-    if (touch) document.documentElement.classList.add('no-hover'); // used by CSS to disable hover anim
+    if (touch) document.documentElement.classList.add('no-hover'); // used by CSS to disable hover anims
   }, []);
 
-  // Form change handler
+  // Handle form changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setConstraints(prev => ({ ...prev, [name]: value }));
+    setConstraints((prev) => ({ ...prev, [name]: value }));
   };
 
   // Simulate progress up to 90% while API runs
   const simulateProgress = () => {
-    let currentProgress = 0;
-    const interval = setInterval(() => {
-      currentProgress += Math.floor(Math.random() * (7 - 1) + 1); // +1..+6
-      if (currentProgress >= 90) {
-        clearInterval(interval);
-        currentProgress = 90;
+    let current = 0;
+    const id = setInterval(() => {
+      current += Math.floor(Math.random() * 6) + 1; // +1..+6
+      if (current >= 90) {
+        current = 90;
+        clearInterval(id);
       }
-      setProgress(currentProgress);
+      setProgress(current);
     }, 800);
-    return interval;
+    return id;
   };
 
-  // Submit -> show loading immediately on mobile, then call API
+  // Submit -> show loading immediately, then call API
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Prevent sticky :hover/focus on mobile
+    // Remove sticky :hover/focus on mobile
     if (document.activeElement?.blur) document.activeElement.blur();
 
-    setIsLoading(true);
-    setError(null);
-    setMealPlan(null);
-    setProgress(0);
+    // Flush the "loading" state before async to force an immediate paint
+    flushSync(() => {
+      setIsLoading(true);
+      setError(null);
+      setMealPlan(null);
+      setProgress(0);
+    });
+    await new Promise((r) => requestAnimationFrame(r)); // ensures paint now
 
-    // Force a paint before starting async work (mobile browsers)
-    await new Promise((r) => requestAnimationFrame(r));
-
+    // Basic validation
     if (constraints.calorieTarget <= 0 || constraints.dailyBudget <= 0) {
       setError("Please enter valid positive numbers for Calories and Budget.");
       setIsLoading(false);
       return;
     }
 
-    const progressInterval = simulateProgress();
+    const timer = simulateProgress();
 
     try {
       const response = await axios.post(API_URL, constraints);
@@ -77,22 +81,28 @@ const DietPlanner = () => {
       setProgress(100);
     } catch (err) {
       const details = err.response?.data?.details || err.message;
-      console.error("API Call Error:", err);
       setError(`Plan generation failed: ${details}. Check your console for details.`);
       setProgress(0);
     } finally {
-      clearInterval(progressInterval);
+      clearInterval(timer);
       setTimeout(() => setIsLoading(false), 500);
     }
   };
 
-  // (Optional helper) INR formatting if needed elsewhere
+  // Optional INR formatter passed to MealCard too (if needed)
   const formatINR = (amount) =>
     new Intl.NumberFormat('en-IN', {
       style: 'currency',
       currency: 'INR',
-      maximumFractionDigits: 0
+      maximumFractionDigits: 0,
     }).format(amount);
+
+  // Button state handling:
+  // Desktop uses "disabled" natively; Mobile uses class + pointer-events
+  const loadingClass   = isLoading ? 'is-loading' : '';
+  const pointerStyle   = isTouch && isLoading ? { pointerEvents: 'none' } : undefined;
+  const ariaDisabled   = isTouch && isLoading ? true : undefined;
+  const actuallyDisabled = !isTouch && isLoading; // only disable on desktop
 
   return (
     <div className="container mt-2 mt-md-5">
@@ -105,7 +115,7 @@ const DietPlanner = () => {
         </p>
       </header>
 
-      {/* Input Form Card */}
+      {/* Form Card */}
       <div className="p-3 p-md-5 mx-3 pt-4 glass-card mb-5 m-0">
         <div className="card-body p-0">
           <form onSubmit={handleSubmit}>
@@ -196,45 +206,27 @@ const DietPlanner = () => {
                 </div>
               </div>
 
-              {/* Submit Button — mobile vs desktop */}
+              {/* Submit Button (mobile vs desktop behavior) */}
               <div className="col-12 pt-3">
-                {isTouch ? (
-                  // MOBILE: same style, no hover/chitchat, internal progress bar
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="btn ui-btn ui-btn--mobile rounded-5 mb-4 btn-lg w-100 text-white"
-                    aria-live="polite"
-                    aria-busy={isLoading}
-                  >
-                    <div
-                      className="btn-progress"
-                      style={{ width: `${progress}%` }}
-                      aria-hidden="true"
-                    />
-                    <span className="w-100 text-center position-relative">
-                      {isLoading ? `Generating Plan... (${progress}%)` : 'GENERATE SMART MEAL PLAN'}
-                    </span>
-                  </button>
-                ) : (
-                  // DESKTOP: keeps hover shimmer + chitchat, progress inside too
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="btn ui-btn ui-btn--desktop rounded-5 mb-4 btn-lg w-100 text-white"
-                    aria-live="polite"
-                    aria-busy={isLoading}
-                  >
-                    <div
-                      className="btn-progress"
-                      style={{ width: `${progress}%` }}
-                      aria-hidden="true"
-                    />
-                    <span className="w-100 text-center position-relative">
-                      {isLoading ? `Generating Plan... (${progress}%)` : 'GENERATE SMART MEAL PLAN'}
-                    </span>
-                  </button>
-                )}
+                <button
+                  type="submit"
+                  disabled={actuallyDisabled}               // desktop only
+                  aria-disabled={ariaDisabled}              // mobile semantics
+                  aria-live="polite"
+                  aria-busy={isLoading}
+                  className={`btn ui-btn ${isTouch ? 'ui-btn--mobile' : 'ui-btn--desktop'} ${loadingClass} rounded-5 mb-4 btn-lg w-100 text-white`}
+                  style={pointerStyle}
+                >
+                  {/* progress as real child for instant paint */}
+                  <div
+                    className="btn-progress"
+                    style={{ width: `${progress}%` }}
+                    aria-hidden="true"
+                  />
+                  <span className="w-100 text-center position-relative">
+                    {isLoading ? `Generating Plan... (${progress}%)` : 'GENERATE SMART MEAL PLAN'}
+                  </span>
+                </button>
               </div>
             </div>
           </form>
