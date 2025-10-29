@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import MealCard from './MealCard';
-// NOTE: Ensure 'bootstrap/dist/css/bootstrap.min.css' and './glass.css' 
-// are imported in your project's main file (e.g., App.js/index.js).
 
 const API_URL = 'https://diet-planner-stkt.onrender.com/api/generate-plan';
 
 const DietPlanner = () => {
-    // 1. State for User Inputs
+    // State for User Inputs
     const [constraints, setConstraints] = useState({
         dietType: 'Non-Vegetarian',
         calorieTarget: 2200,
@@ -16,7 +14,7 @@ const DietPlanner = () => {
         dailyBudget: 300,
     });
 
-    // 2. State for API Output & Loading
+    // State for API Output & Loading
     const [mealPlan, setMealPlan] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [progress, setProgress] = useState(0);
