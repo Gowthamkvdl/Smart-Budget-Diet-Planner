@@ -92,7 +92,7 @@ const DietPlanner = () => {
 
     // --- RENDER LOGIC ---
     return (
-        <div className="container mt-5 mt-md-3">
+        <div className="container mt-3 mt-md-5">
             <header className="text-center mb-5">
                 <h1 className="display-4 text-success pt-5 font-weight-bold">
                     Smart Budget Diet Planner
@@ -198,7 +198,7 @@ const DietPlanner = () => {
                                 <button
                                     type="submit"
                                     disabled={isLoading}
-                                    className={`btn ui-btn rounded-5 btn-lg w-100 text-white`}
+                                    className={`btn ui-btn rounded-5 mb-4 btn-lg w-100 text-white`}
                                     style={{
                                         "--progress": `${progress}%` // dynamic progress fill
                                     }}
