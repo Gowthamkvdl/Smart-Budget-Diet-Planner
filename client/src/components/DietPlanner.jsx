@@ -45,15 +45,20 @@ const DietPlanner = () => {
     // Handles the form submission and API call
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // --- Fix mobile invisible button ---
+        if (document.activeElement && typeof document.activeElement.blur === "function") {
+            document.activeElement.blur(); // remove sticky :hover
+        }
+
+        // Force React flush before long async work
         setIsLoading(true);
         setError(null);
         setMealPlan(null);
         setProgress(0);
 
-        // 👇 Fix mobile disappearing hover / focus glitch
-        if (document.activeElement && typeof document.activeElement.blur === "function") {
-            document.activeElement.blur();
-        }
+        // 👇 Immediate repaint on mobile
+        await new Promise((resolve) => requestAnimationFrame(resolve));
 
         if (constraints.calorieTarget <= 0 || constraints.dailyBudget <= 0) {
             setError("Please enter valid positive numbers for Calories and Budget.");
@@ -61,30 +66,23 @@ const DietPlanner = () => {
             return;
         }
 
-        const progressInterval = simulateProgress(); // Start simulation
+        const progressInterval = simulateProgress();
 
         try {
-            // Sends constraints to the secure Express proxy
             const response = await axios.post(API_URL, constraints);
             setMealPlan(response.data);
-
-            setProgress(100); // Finalize progress bar on success
-
+            setProgress(100);
         } catch (err) {
             console.error("API Call Error:", err);
             const details = err.response?.data?.details || err.message;
             setError(`Plan generation failed: ${details}. Check your console for details.`);
             setProgress(0);
-            setTimeout(() => setIsLoading(false), 500); // Hide loading quickly on error
-
         } finally {
-            clearInterval(progressInterval); // Stop simulation
-            if (!error) {
-                // Wait briefly to show 100% before transitioning to results
-                setTimeout(() => setIsLoading(false), 500);
-            }
+            clearInterval(progressInterval);
+            setTimeout(() => setIsLoading(false), 500);
         }
     };
+
 
     // --- Helper function for currency formatting (Indian locale for INR) ---
     const formatINR = (amount) => {
