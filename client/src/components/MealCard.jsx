@@ -37,11 +37,11 @@ const MealCard = ({ mealPlan, constraints }) => {
         cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     }
-  }, [mealPlan]); // <-- trigger when mealPlan update
+  }, [mealPlan]); // <-- trigger when mealPlan updates
 
   return (
     <section ref={cardRef} className="mt-5 mb-5">
-      <h2 className="fw-bold mb-4 pt-md-3 text-dark-emphasis text-center display-6">
+      <h2 className="fw-bold mb-4 pt-3 text-dark-emphasis text-center display-6">
         Your 7-Day Personalized Plan
       </h2>
 

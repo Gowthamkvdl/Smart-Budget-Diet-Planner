@@ -92,7 +92,7 @@ const DietPlanner = () => {
 
     // --- RENDER LOGIC ---
     return (
-        <div className="container mt-5">
+        <div className="container mt-5 mt-md-3">
             <header className="text-center mb-5">
                 <h1 className="display-4 text-success pt-5 font-weight-bold">
                     Smart Budget Diet Planner
@@ -103,7 +103,7 @@ const DietPlanner = () => {
             </header>
 
             {/* Input Form Card - Uses custom glass-card style */}
-            <div className="p-3 p-md-5 mx-3 pt-4 glass-card mb-4 m-0">
+            <div className="p-3 p-md-5 mx-3 pt-4 glass-card mb-5 m-0">
                 <div className="card-body p-0"> 
                     <form onSubmit={handleSubmit}>
                         <div className="row g-4">
