@@ -10,6 +10,7 @@ This will launch both the **frontend (React + Vite + NGINX)** and **backend (Nod
 ```bash
 git clone https://github.com/<your-username>/diet-planner.git
 cd diet-planner
+```bash
 
 ### ⚙️ Step 2 — Build & Start Containers
 
