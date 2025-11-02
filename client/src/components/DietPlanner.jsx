@@ -4,7 +4,7 @@ import { flushSync } from 'react-dom';
 import axios from 'axios';
 import MealCard from './MealCard';
 
-const API_URL = 'https://diet-planner-stkt.onrender.com/api/generate-plan';
+const API_URL = 'http://localhost:3000/api/generate-plan';
 
 const DietPlanner = () => {
 	// Inputs
