@@ -8,7 +8,7 @@ This will launch both the **frontend (React + Vite + NGINX)** and **backend (Nod
 ### 🧩 Step 1 — Clone the Repository
 
 ```bash
-git clone https://github.com/<your-username>/diet-planner.git
+git clone https://github.com/Gowthamkvdl/Smart-Budget-Diet-Planner.git
 cd diet-planner
 ```
 
