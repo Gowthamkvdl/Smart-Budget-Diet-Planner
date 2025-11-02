@@ -1,41 +1,32 @@
- 🥗 AI Diet Planner (MERN + Docker)
+## 🚀 Quick Start — Run via Docker
 
-A full-stack **AI-powered Diet Planner** built with Express.js, React (Vite), and **Node.js** — fully containerized with **Docker Compose** for easy setup and deployment.  
-It automatically generates personalized meal plans based on user preferences and daily budget.
+Get the entire **AI Diet Planner (MERN)** stack running in one command using **Docker Compose** 🐳  
 
+---
 
-⚙️ Tech Stack
-
-| Layer | Technology |
-|--------|-------------|
-| Frontend | React + Vite + Nginx |
-| Backend | Node.js + Express |
-| Database | (Optional) MongoDB |
-| Containerization | Docker & Docker Compose |
-
-
-🚀 Quick Start — Run via Docker
-
-1️⃣ Clone the repository
-
+### 🧩 Step 1 — Clone the Repository
+```bash
 git clone https://github.com/<your-username>/diet-planner.git
 cd diet-planner
-
-2️⃣ Build and start containers
-
+⚙️ Step 2 — Build & Start Containers
+bash
+Copy code
 sudo docker compose up --build
+💡 Pro Tip:
+Use the --build flag the first time or whenever you change code or dependencies.
+For faster restarts (when nothing changed), skip rebuilding:
 
-| Service  | Port   | Description                 |
-| -------- | ------ | --------------------------- |
-| Frontend | `7000` | React app (served by Nginx) |
-| Backend  | `3000` | Node.js Express API         |
+bash
+Copy code
+sudo docker compose up
+🌐 Step 3 — Access the App
+Service	URL	Description
+🖥️ Frontend	http://localhost:7000	React + Vite (served via NGINX)
+⚙️ Backend API	http://localhost:3000	Node + Express server
 
+🧹 Step 4 — Stop Containers
+When you’re done, gracefully shut everything down:
 
-📦 Folder Structure
-diet/
- ├── api/                # Backend (Express.js)
- ├── client/             # Frontend (Vite + React)
- ├── docker-compose.yml  # Defines frontend + backend services
- ├── README.md           # Project documentation
-
-
+bash
+Copy code
+sudo docker compose down
