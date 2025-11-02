@@ -16,15 +16,19 @@ cd diet-planner
 
 ```bash
 sudo docker compose up --build
+```
 
 ### 🌐 Step 3 — Access the App
 Once containers are running, open the app in your browser:
+```
 | Service            | URL                                            | Description                       |
 | ------------------ | ---------------------------------------------- | --------------------------------- |
 | 🖥️ **Frontend**   | [http://localhost:7000](http://localhost:7000) | React + Vite served through NGINX |
 | ⚙️ **Backend API** | [http://localhost:3000](http://localhost:3000) | Node.js + Express server          |
+```
 
 ### 🧹 Step 4 — Stop Containers
 When you’re done, gracefully shut down everything with:
 ```bash
 sudo docker compose down
+```
