@@ -17,10 +17,12 @@ It automatically generates personalized meal plans based on user preferences and
 🚀 Quick Start — Run via Docker
 
 1️⃣ Clone the repository
+
 git clone https://github.com/<your-username>/diet-planner.git
 cd diet-planner
 
 2️⃣ Build and start containers
+
 sudo docker compose up --build
 
 | Service  | Port   | Description                 |
