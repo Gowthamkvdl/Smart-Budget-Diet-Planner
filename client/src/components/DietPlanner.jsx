@@ -4,7 +4,10 @@ import { flushSync } from 'react-dom';
 import axios from 'axios';
 import MealCard from './MealCard';
 
-const API_URL = 'http://localhost:3000/api/generate-plan';
+const API_URL =
+  import.meta.env.VITE_API_URL
+    ? `${import.meta.env.VITE_API_URL}/api/generate-plan`
+    : 'http://localhost:3000/api/generate-plan';
 
 const DietPlanner = () => {
 	// Inputs
