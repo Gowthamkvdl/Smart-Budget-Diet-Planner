@@ -11,7 +11,7 @@ This will launch both the **frontend (React + Vite + NGINX)** and **backend (Nod
 git clone https://github.com/Gowthamkvdl/Smart-Budget-Diet-Planner.git
 cd diet-planner
 ```
-
+---
 
 ### 🔑 Step 2 — Get and Add Your Google Gemini API Key
 The backend uses the Google Gemini API to generate personalized diet plans.
@@ -32,20 +32,20 @@ GEMINI_API_KEY=your_api_key_here
 ```
 
 
-### ⚙️ Step 2 — Build & Start Containers
+### ⚙️ Step 3 — Build & Start Containers
 
 ```bash
 sudo docker compose up --build
 ```
 
-### 🌐 Step 3 — Access the App
+### 🌐 Step 4 — Access the App
 Once containers are running, open the app in your browser:
 | Service            | URL                                            | Description                       |
 | ------------------ | ---------------------------------------------- | --------------------------------- |
 | 🖥️ **Frontend**   | [http://localhost:7000](http://localhost:7000) | React + Vite served through NGINX |
 | ⚙️ **Backend API** | [http://localhost:3000](http://localhost:3000) | Node.js + Express server          |
 
-### 🧹 Step 4 — Stop Containers
+### 🧹 Step 5 — Stop Containers
 When you’re done, gracefully shut down everything with:
 ```bash
 sudo docker compose down
