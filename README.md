@@ -25,6 +25,11 @@ Follow these steps to obtain your own key 🔐:
 
   4. Copy the generated key 
 
+Now, create a .env file inside the api folder and add your key:
+
+```
+GEMINI_API_KEY=your_api_key_here
+```
 
 
 ### ⚙️ Step 2 — Build & Start Containers
