@@ -34,6 +34,8 @@ GEMINI_API_KEY=your_api_key_here
 
 ### ⚙️ Step 3 — Build & Start Containers
 
+From the **project root folder** (where the `docker-compose.yml` file is located), run the following command to build and start all containers:
+
 ```bash
 sudo docker compose up --build
 ```
