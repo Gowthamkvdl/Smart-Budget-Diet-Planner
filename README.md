@@ -30,13 +30,15 @@ Now, create a .env file inside the api folder and add your key:
 ```
 GEMINI_API_KEY=your_api_key_here
 ```
-
+---
 
 ### ⚙️ Step 3 — Build & Start Containers
 
 ```bash
 sudo docker compose up --build
 ```
+
+---
 
 ### 🌐 Step 4 — Access the App
 Once containers are running, open the app in your browser:
@@ -45,8 +47,11 @@ Once containers are running, open the app in your browser:
 | 🖥️ **Frontend**   | [http://localhost:7000](http://localhost:7000) | React + Vite served through NGINX |
 | ⚙️ **Backend API** | [http://localhost:3000](http://localhost:3000) | Node.js + Express server          |
 
+---
+
 ### 🧹 Step 5 — Stop Containers
 When you’re done, gracefully shut down everything with:
 ```bash
 sudo docker compose down
 ```
+---
