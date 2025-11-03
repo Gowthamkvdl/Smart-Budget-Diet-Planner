@@ -12,6 +12,21 @@ git clone https://github.com/Gowthamkvdl/Smart-Budget-Diet-Planner.git
 cd diet-planner
 ```
 
+
+### 🔑 Step 2 — Get and Add Your Google Gemini API Key
+The backend uses the Google Gemini API to generate personalized diet plans.
+Follow these steps to obtain your own key 🔐:
+
+  1. Visit https://makersuite.google.com/app/apikey (or search Google AI Studio API Key).
+
+  2. Sign in with your Google account.
+
+  3. Click “Create API Key”.
+
+  4. Copy the generated key 
+
+
+
 ### ⚙️ Step 2 — Build & Start Containers
 
 ```bash
