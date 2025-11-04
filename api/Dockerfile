@@ -15,6 +15,6 @@ COPY . .
 EXPOSE 3000
 
 # running cmd
-CMD ["npm", "run", "server"]
+CMD ["npm", "start"]
 
 
